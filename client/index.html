@@ -24,6 +24,12 @@
 	<button ng-click="viewFile()">View </button>
 	<button ng-click="downloadFile()">download</button>
 </div>
+ 
+ <button class="btn btn-info" ng-click=showUrls()>Show Urls</button>	
+
+ <ul>
+ 	<li ng-repeat="url in urls">{{ url.url}}</li>
+ </ul>
 
 </div>
 

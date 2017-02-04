@@ -41,6 +41,23 @@ $scope.viewFile = function(){
    })
 }
 
+$scope.showUrls = function(){
+
+
+
+	$http({
+		method:'GET',
+		url:'/getData',
+	}).then(function(data){
+		$scope.urls = data.data;
+
+		console.log(data);
+
+	},function(reject){
+
+	})
+}
+
 
 $scope.downloadFile = function(){
 

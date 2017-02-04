@@ -4,11 +4,16 @@
   var app = express();
   var phantom = require('phantom');
   var bodyParser = require('body-parser');
+  var mongoose = require('mongoose');
+
+  mongoose.connect('mongodb://127.0.0.1:27017/projectpdf' , function(err,succ){
+  	console.log('mongoose connected');
+  })
 
   app.use(bodyParser.urlencoded({ extended: false }));
 
 // parse application/json
-app.use(bodyParser.json())
+  app.use(bodyParser.json())
 
 
    // app.use(express.static(path.join(__dirname,'./client')));

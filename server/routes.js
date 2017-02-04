@@ -1,8 +1,11 @@
 var express = require('express');
 var phantom = require('phantom');
 var path = require('path');
+var mongoose = require('mongoose');
+var pdfModel = require('./pdf.model');
 
 var route = express.Router();
+
 
 route.get('/' , function(req,res){
 	console.log('reached to this route');
@@ -20,6 +23,20 @@ route.get('/download' , function(req,res){
 	  res.download(path.join(__dirname, '../',req.query.file));
 
 	
+})
+
+route.get('/getData' , function(req,res){
+
+	pdfModel.find({},function(err,data){
+		if(err){
+			console.log('erroroccurred')
+		}
+		else
+		{
+			console.log('data is ' , data);
+			res.send(data);
+		}
+	})
 })
 
 
@@ -64,8 +81,25 @@ route.post('/convert' , function(req,res){
            console.log('file moved')
            })*/
           console.log('Page Rendered');
-          ph.exit();
-          res.send(filename);
+
+          var obj = new pdfModel({
+          	url : req.query.weburl,
+          	filename:filename
+          });
+
+          obj.save(function(err,data){
+          	if(err){
+          		console.log('err occured');
+          	}
+          	else {
+
+          		console.log('filesaved');
+          		ph.exit();
+                res.send(filename);
+          	}
+          })
+
+          
           //res.download('../server/file.pdf')
           //res.send(filename)
         });
